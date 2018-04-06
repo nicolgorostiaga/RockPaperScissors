@@ -33,8 +33,8 @@ class Rounds {
 private int maxRuns;
 private int currentRuns;
 private boolean playing;
-public Rounds (int mc) {
-maxRuns = mc;
+public Rounds (int mr) {
+maxRuns = mr;
 currentRuns = 0;
 playing = true;
 }
