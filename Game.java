@@ -13,7 +13,6 @@ public class Game {
 		player1.start ();
 		player2.start ();
 		
-		System.out.println ("All students are visiting the library.");
 		try {
 		player1.join();
 		player2.join();
