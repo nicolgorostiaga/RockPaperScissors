@@ -1,4 +1,4 @@
-public enum Outcome { ROCK, PAPER, SCISSOR };
+
 public class Game {
 	
 	public static void main (String args[]) {
@@ -53,7 +53,7 @@ return ( currentRuns + 1);
 class Player extends Thread {
 private int id;
 private Rounds rounds;
-
+private String outcome;
 public Player ( int i, Rounds round) {
 		id = i;
 		rounds = round;
@@ -61,6 +61,11 @@ public Player ( int i, Rounds round) {
 public void run () {
 	int handsymbol = (int)(Math.random()*2);
 	switch(handsymbol){
-		case 
+		case 0: outcome = "Rock";
+		break;
+		case 1: outcome = "Paper";
+		break;
+		case 2: outcome = "Scissor";
+		break;
 	}
 } // Players
