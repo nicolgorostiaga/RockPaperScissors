@@ -1,4 +1,4 @@
-
+public enum Outcome { ROCK, PAPER, SCISSOR };
 public class Game {
 	
 	public static void main (String args[]) {
@@ -59,6 +59,8 @@ public Player ( int i, Rounds round) {
 		rounds = round;
 	}
 public void run () {
-	
+	int handsymbol = (int)(Math.random()*2);
+	switch(handsymbol){
+		case 
 	}
 } // Players
