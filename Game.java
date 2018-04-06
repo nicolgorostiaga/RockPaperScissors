@@ -61,7 +61,6 @@ public Player ( int i, Rounds round) {
 		rounds = round;
 	}
 public void run () {
-	Scanner scan = new Scanner(System.in);
 	
 	}
 } // Student
