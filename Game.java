@@ -1,4 +1,3 @@
-import java.util.Scanner;
 
 public class Game {
 	
@@ -27,7 +26,7 @@ public class Game {
 		}
 		round.close();
 		}
-} // RunLibrary
+} 
 
 class Rounds {
 private int maxRuns;
@@ -45,7 +44,6 @@ public int getruns () {
 return ( currentRuns + 1);
 }
 /*public synchronized boolean checkOut(int id, boolean playing, int currentRuns) {
-	
 	return playing;
 
 }*/
@@ -63,4 +61,4 @@ public Player ( int i, Rounds round) {
 public void run () {
 	
 	}
-} // Student
+} // Players
