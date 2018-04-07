@@ -23,14 +23,7 @@ public class Game {
 		rock = player1.getrockwins()+player2.getrockwins();
 		paper = player1.getpaperwins()+player2.getpaperwins();
 		
-		if(round.getruns() < maxRounds){
-			System.out.println("Summary Statistics: ");
-			System.out.println("Number of draws: "+ draws);
-			System.out.println("Number of times scissors won: "+ scissors);
-			System.out.println("Number of times rock won: "+ rock );
-			System.out.println("Number of times paper won: "+ paper);
-		}
-		round.close();
+		round.close(round,maxRounds,draws, scissors, rock, paper);
 		}
 } // RunLibrary
 
@@ -45,8 +38,14 @@ private boolean playing;
 		playing = true;
 	}
 
-	public void close () {
-
+	public void close (Rounds round,int maxRounds,int draws, int scissors, int rock, int paper) {
+		if(round.getruns() < maxRounds){
+			System.out.println("Summary Statistics: ");
+			System.out.println("Number of draws: "+ draws);
+			System.out.println("Number of times scissors won: "+ scissors);
+			System.out.println("Number of times rock won: "+ rock );
+			System.out.println("Number of times paper won: "+ paper);
+		}
 	}
 	public int getruns () {
 		return ( currentRuns + 1);
