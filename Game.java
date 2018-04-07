@@ -59,7 +59,7 @@ private int symbol;
 	// When players are playing
 	public void play(int symbol){
 		while(getruns() <= maxRuns){
-			System.out.println("hello");
+			System.out.println(symbol);
 		}
 	}
 /*public synchronized boolean checkOut(int id, boolean playing, int currentRuns) {
@@ -73,11 +73,11 @@ private int symbol;
 class Player extends Thread {
 private int id;
 private Rounds rounds;
-private int outcome;
 private int numdraws;
 private int numscissors;
 private int numrock;
 private int numpaper;
+private int outcome;
 
 public Player ( int i, Rounds round) {
 		id = i;
