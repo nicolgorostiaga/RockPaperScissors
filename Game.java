@@ -73,7 +73,7 @@ private int symbol;
 class Player extends Thread {
 private int id;
 private Rounds rounds;
-private String outcome;
+private int outcome;
 private int numdraws;
 private int numscissors;
 private int numrock;
@@ -97,7 +97,7 @@ public int getpaperwins(){
 }
 public int gethandsymbol(){
 	Random handsymbol = new Random();
-	int outcome = 1 + handsymbol.nextInt(3);
+	outcome = 1 + handsymbol.nextInt(3);
 	return outcome;
 }
 public void run () {
