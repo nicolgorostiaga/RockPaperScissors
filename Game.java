@@ -1,17 +1,19 @@
+import java.util.Random;
+
 public class Game {
 	
 	public static void main (String args[]) {
 		Player player1, player2;
 		Rounds round;
 		int draws,scissors,rock,paper;
-		int maxRounds = 1000;
+		int maxRounds = 5;// This value should be 1000 but for testing purposes is 5.
 		round = new Rounds(maxRounds);
 		player1 = new Player (1, round);
 		player2 = new Player (2, round);
 
 		player1.start ();
 		player2.start ();
-		
+		round.open();
 		try {
 		player1.join();
 		player2.join();
@@ -31,24 +33,34 @@ class Rounds {
 private int maxRuns;
 private int currentRuns;
 private boolean playing;
-
+private int symbol;
 	public Rounds (int mr) {
 		maxRuns = mr;
 		currentRuns = 0;
-		playing = true;
 	}
 
 	public void close (Rounds round,int maxRounds,int draws, int scissors, int rock, int paper) {
-		if(round.getruns() < maxRounds){
 			System.out.println("Summary Statistics: ");
 			System.out.println("Number of draws: "+ draws);
 			System.out.println("Number of times scissors won: "+ scissors);
 			System.out.println("Number of times rock won: "+ rock );
 			System.out.println("Number of times paper won: "+ paper);
-		}
 	}
+	// All Players are playing
+	public synchronized void open(){
+		playing = true;
+		notifyAll();
+	}
+	// Current number of round
 	public int getruns () {
-		return ( currentRuns + 1);
+		currentRuns++;
+		return (currentRuns);
+	}
+	// When players are playing
+	public void play(int symbol){
+		while(getruns() <= maxRuns){
+			System.out.println("hello");
+		}
 	}
 /*public synchronized boolean checkOut(int id, boolean playing, int currentRuns) {
 	
@@ -83,16 +95,14 @@ public int getrockwins(){
 public int getpaperwins(){
 	return numpaper;
 }
+public int gethandsymbol(){
+	Random handsymbol = new Random();
+	int outcome = 1 + handsymbol.nextInt(3);
+	return outcome;
+}
 public void run () {
-	int handsymbol = (int)(Math.random()*2);
-	switch(handsymbol){
-		case 0: outcome = "Rock";
-		break;
-		case 1: outcome = "Paper";
-		break;
-		case 2: outcome = "Scissor";
-		break;
-	}
+	rounds.play(gethandsymbol());
+	
 }
 	
 } // Player
