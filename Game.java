@@ -30,15 +30,21 @@ public class Game {
 } // RunLibrary
 
 class Rounds {
+
+private boolean[] doneplaying;
 private int maxRuns;
 private int currentRuns;
-private boolean playing;
-private int symbol;
+private int player2Symbol,player1Symbol;// stores the handsymbol of the player
 	public Rounds (int mr) {
 		maxRuns = mr;
 		currentRuns = 0;
 	}
-
+	public int getmaxRounds(){
+		return maxRuns;
+	}
+	public int getcurrentRuns(){
+		return currentRuns;
+	}
 	public void close (Rounds round,int maxRounds,int draws, int scissors, int rock, int paper) {
 			System.out.println("Summary Statistics: ");
 			System.out.println("Number of draws: "+ draws);
@@ -48,25 +54,33 @@ private int symbol;
 	}
 	// All Players are playing
 	public synchronized void open(){
-		playing = true;
+		doneplaying = new boolean[3];
+		for(int i = 0; i < doneplaying.length;i++){
+			doneplaying[i]= false;
+		}
 		notifyAll();
 	}
-	// Current number of round
-	public int getruns () {
-		currentRuns++;
-		return (currentRuns);
+	public synchronized void setDone(int i){
+		doneplaying[i] = false;
 	}
-	// When players are playing
-	public void play(int symbol){
-		while(getruns() <= maxRuns){
-			System.out.println(symbol);
+	/*public synchronized int isAllDone(int i1, int i2){
+		
+		if(i1 < i2)
+		
+		
+	}*/
+	public synchronized void play(int id, int outcome){
+		if(id == 1){
+			player1Symbol = outcome;
+			System.out.println("Round "+ currentRuns +": Player " + id +" "+ player1Symbol);
 		}
+		else{
+				currentRuns++;
+				player2Symbol = outcome;
+				System.out.println("Round "+ currentRuns +": Player " + id +" "+ player2Symbol);
+			}
+		//isAllDone(player1Symbol,player2Symbol);
 	}
-/*public synchronized boolean checkOut(int id, boolean playing, int currentRuns) {
-	
-	return playing;
-
-}*/
 } // Rounds
 
 
@@ -74,35 +88,60 @@ class Player extends Thread {
 private int id;
 private Rounds rounds;
 private int numdraws;
+private int outcome;
 private int numscissors;
 private int numrock;
 private int numpaper;
-private int outcome;
-
-public Player ( int i, Rounds round) {
+Random handsymbol = new Random();
+public Player( int i, Rounds round) {
 		id = i;
 		rounds = round;
-	}
+		outcome = 1 + handsymbol.nextInt(3);
+}
+public int getid(){
+	return id;
+}
+public void setdraws(int numdraws){
+	numdraws++;
+}
 public int getdraws(){
 	return numdraws;
+}
+public void setscissors(int numsissors){
+	numscissors++;
 }
 public int getscissorwins(){
 	return numscissors;
 }
+public void setrock(int numrock){
+	numrock++;
+}
 public int getrockwins(){
 	return numrock;
+}
+public void setpaper(int numpaper){
+	numpaper++;
 }
 public int getpaperwins(){
 	return numpaper;
 }
-public int gethandsymbol(){
-	Random handsymbol = new Random();
-	outcome = 1 + handsymbol.nextInt(3);
+public synchronized void waitAllDone(int outcome){
+	if(outcome == 1){
+		setrock(1);
+	}
+	else if(outcome == 2){
+		setpaper(1);
+	}
+	else{
+		setscissors(1);
+	}
+}
+public int getsymbol(){
 	return outcome;
 }
+
 public void run () {
-	rounds.play(gethandsymbol());
-	
+	rounds.play(id,getsymbol());
 }
 	
 } // Player
