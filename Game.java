@@ -35,9 +35,15 @@ private boolean[] doneplaying;
 private int maxRuns;
 private int currentRuns;
 private int player2Symbol,player1Symbol;// stores the handsymbol of the player
+private int numTies; // number of Ties
+private int numWins;// number of wins
+private int numLose;// number of lose
 	public Rounds (int mr) {
 		maxRuns = mr;
 		currentRuns = 0;
+		numTies = 0;
+		numWins = 0;
+		numLose = 0;
 	}
 	public int getmaxRounds(){
 		return maxRuns;
@@ -54,7 +60,7 @@ private int player2Symbol,player1Symbol;// stores the handsymbol of the player
 	}
 	// All Players are playing
 	public synchronized void open(){
-		doneplaying = new boolean[3];
+		doneplaying = new boolean[1];
 		for(int i = 0; i < doneplaying.length;i++){
 			doneplaying[i]= false;
 		}
@@ -63,12 +69,47 @@ private int player2Symbol,player1Symbol;// stores the handsymbol of the player
 	public synchronized void setDone(int i){
 		doneplaying[i] = false;
 	}
-	/*public synchronized int isAllDone(int i1, int i2){
-		
-		if(i1 < i2)
-		
-		
-	}*/
+	public synchronized int isAllDone(int i1, int i2){
+		// Rock = 1, Paper = 2, Scissors = 3
+		//Player 1 has Rock
+		 if(i1 == 1){
+             if(i2 == 1){
+            	 numTies++;
+                 System.out.println("ITS A TIE!");}    
+             else if(i2 == 2){
+            	 numLose++;
+                 System.out.println("You lose! Player 1" );}    
+             else{
+            	 numLose++;
+                 System.out.println("You lose! Player 1");} 
+		 }
+		 // Player 1 has paper
+         else if(i1 == 2){
+             if(i2 == 1){
+            	 numWins++;
+                 System.out.println("You win! Player 1");}   
+             else if(i2 == 2){
+            	 numTies++;
+                 System.out.println("Its a tie!");}
+             else{
+            	 numLose++;
+                 System.out.println("You lose! Player 1"); }
+         }
+		 //Player 1 has scissor
+         else{
+             if(i2 == 1){
+            	 numWins++;
+                 System.out.println("You win!Player 1");}
+             else if(i2 == 2){
+            	 numWins++;
+                 System.out.println("you win! Player 1");}
+             else{
+            	 numWins++;
+                 System.out.println("Its a tie!");}
+         }
+		 return 0;
+	}
+	//public synchronized void outcome(numTie, );
 	public synchronized void play(int id, int outcome){
 		if(id == 1){
 			player1Symbol = outcome;
@@ -78,8 +119,8 @@ private int player2Symbol,player1Symbol;// stores the handsymbol of the player
 				currentRuns++;
 				player2Symbol = outcome;
 				System.out.println("Round "+ currentRuns +": Player " + id +" "+ player2Symbol);
+				isAllDone(player1Symbol,player2Symbol);
 			}
-		//isAllDone(player1Symbol,player2Symbol);
 	}
 } // Rounds
 
@@ -96,52 +137,47 @@ Random handsymbol = new Random();
 public Player( int i, Rounds round) {
 		id = i;
 		rounds = round;
-		outcome = 1 + handsymbol.nextInt(3);
+		outcome = 1 + handsymbol.nextInt(3);// Hand signals for each player
 }
 public int getid(){
 	return id;
 }
+// Number of Draws
 public void setdraws(int numdraws){
 	numdraws++;
 }
 public int getdraws(){
 	return numdraws;
 }
+// Number of Wins by scissors
 public void setscissors(int numsissors){
 	numscissors++;
 }
 public int getscissorwins(){
 	return numscissors;
 }
+// Number of Wins by Rock
 public void setrock(int numrock){
 	numrock++;
 }
 public int getrockwins(){
 	return numrock;
 }
+// Number of Wins by Paper
 public void setpaper(int numpaper){
 	numpaper++;
 }
 public int getpaperwins(){
 	return numpaper;
 }
-public synchronized void waitAllDone(int outcome){
-	if(outcome == 1){
-		setrock(1);
-	}
-	else if(outcome == 2){
-		setpaper(1);
-	}
-	else{
-		setscissors(1);
-	}
-}
+// Hand Symbol of each player
 public int getsymbol(){
 	return outcome;
 }
 
 public void run () {
 	rounds.play(id,getsymbol());
+	//rounds.outcome(numdraws, numscissors, numrock, numpaper);
 }
 	
 } // Player
