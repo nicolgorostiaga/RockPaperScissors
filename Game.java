@@ -69,7 +69,7 @@ private int numLose;// number of lose
 	public synchronized void setDone(int i){
 		doneplaying[i] = false;
 	}
-	for (int h=0 ; h > maxRounds ; h++)
+	for (int h=0 ; h < maxRounds ; h++)
 	     {
 	public synchronized int isAllDone(int i1, int i2){
 		// Rock = 1, Paper = 2, Scissors = 3
