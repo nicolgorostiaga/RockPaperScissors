@@ -69,8 +69,6 @@ private int numLose;// number of lose
 	public synchronized void setDone(int i){
 		doneplaying[i] = false;
 	}
-	for (int h=0 ; h < maxRounds ; h++)
-	     {
 	public synchronized int isAllDone(int i1, int i2){
 		// Rock = 1, Paper = 2, Scissors = 3
 		//Player 1 has Rock
@@ -111,7 +109,6 @@ private int numLose;// number of lose
          }
 		 return 0;
 	}
-	     }
 	//public synchronized void outcome(numTie, );
 	public synchronized void play(int id, int outcome){
 		if(id == 1){
