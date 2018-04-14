@@ -120,15 +120,15 @@ public class Game extends JPanel{
 		    f.setSize(400, 300);
 		    double[] values = new double[4];
 		    String[] names = new String[4];
-		    values[0] = 1;// store scissor wins
+		    values[0] = round.getscissors();// store scissor wins
 		    names[0] = "Scissors";
 
-		    values[1] = 2;// store paper wins
+		    values[1] = round.getpaper();// store paper wins
 		    names[1] = "Paper";
 
-		    values[2] = 3;// store rock wins
+		    values[2] = round.getrock();// store rock wins
 		    names[2] = "Rock";
-		    values[3] = 4;// store draws
+		    values[3] = round.getdraws();// store draws
 		    names[3] = "Draws";
 
 		    f.getContentPane().add(new Game(values, names));
@@ -151,6 +151,49 @@ private int count;
 private int id;
 private int outcome;
 private boolean tie, p1win;
+	
+	/****************************************************************************************
+	 * 
+	 * 
+	 * 
+	 * 
+	 ****************************************************************************************/
+	public int getdraws(){
+		return draws;
+	}
+	/****************************************************************************************
+	 * 
+	 * 
+	 * 
+	 * 
+	 ****************************************************************************************/
+	public int getscissors(){
+		return scissors;
+	}
+	/****************************************************************************************
+	 * 
+	 * 
+	 * 
+	 * 
+	 ****************************************************************************************/
+	public int getrock(){
+		return rock;
+	}
+	/****************************************************************************************
+	 * 
+	 * 
+	 * 
+	 * 
+	 ****************************************************************************************/
+	public int getpaper(){
+		return paper;
+	}
+	/****************************************************************************************
+	 * 
+	 * 
+	 * 
+	 * 
+	 ****************************************************************************************/
 	public Rounds () {
 		count = 0;
 	}
