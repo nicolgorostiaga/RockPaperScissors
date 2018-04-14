@@ -10,7 +10,7 @@ import javax.swing.JPanel;
  *<pre>
  * File: Game.java
  * 
- * The class called Game, simulates a rock, paper, scissors game between two players and 1000 rounds.
+ * The class Game simulates a rock, paper, scissors game between two players and 1000 rounds.
  * 
  * </pre>
  * @author Nicol Salgado, Adam Orrick, Joel Kanamugire
@@ -25,22 +25,22 @@ public class Game extends JPanel{
 	  /****************************************************************************************
 	   * <pre>
 	   * The Game constructor sets the name of each category, the title, and the values
-	   * of each category. The category include draw, wins by scissors, wins by rock,
+	   * for each category. The category include draw, wins by scissors, wins by rock,
 	   * and wins by paper.
 	   * </pre>
 	   * @param double[] values for paper, draws, scissors, rock.
 	   * @param String[] names for each category.
 		 ****************************************************************************************/
-	  public Game(double[] v, String[] n, Rounds round) {
+	  public Game(double[] v, String[] n) {
 	    names = n;
 	    values = v;
 	    title = "Relative Wins and Draws with 2 Players and 1000 Rounds";
 	  }
 	  /****************************************************************************************
-	   * 
-	   * 
-	   * 
-	   * 
+	   * <pre>
+	   * The paintComponent method creates the bar graph to illustrate the game's wins and draws.
+	   * </pre>
+	   * @param Graphics creates all graphics context.
 	   ****************************************************************************************/
 	  public void paintComponent(Graphics g) {
 		    double minValue = 0;
@@ -57,42 +57,47 @@ public class Game extends JPanel{
 		    int clientWidth = d.width;
 		    int clientHeight = d.height;
 		    int barWidth = clientWidth / values.length;
+		    
 		    // Title of Bar graph
 		    Font titleFont = new Font("arial",Font.BOLD, 12);
-		    FontMetrics titleFontMetrics = g.getFontMetrics(titleFont);
+		    FontMetrics titleMetrics = g.getFontMetrics(titleFont);
+		    
 		    // Title for each Category
 		    Font labelFont = new Font("arial", Font.PLAIN, 10);
-		    FontMetrics labelFontMetrics = g.getFontMetrics(labelFont);
+		    FontMetrics labelMetrics = g.getFontMetrics(labelFont);
 		    
-		    int titleWidth = titleFontMetrics.stringWidth(title);
-		    int y = titleFontMetrics.getAscent();
+		  
+		    int titleWidth = titleMetrics.stringWidth(title);
+		    int y = titleMetrics.getAscent();
 		    int x = (clientWidth - titleWidth) / 2;
 		    g.setFont(titleFont);
 		    g.drawString(title, x, y);
-
-		    int top = titleFontMetrics.getHeight();
-		    int bottom = labelFontMetrics.getHeight();
-		    if (maxValue == minValue)
-		      return;
+		    
+		    int top = titleMetrics.getHeight();
+		    int bottom = labelMetrics.getHeight();
+		    
+		    
 		    double scale = (clientHeight - top - bottom) / (maxValue - minValue);
-		    y = clientHeight - labelFontMetrics.getDescent();
+		    y = clientHeight - labelMetrics.getDescent();
 		    g.setFont(labelFont);
-		    for (int i = 0; i < values.length; i++) {
-		      int valueX = i * barWidth + 1;
-		      int valueY = top;
-		      int height = (int) (values[i] * scale);
-		      if (values[i] >= 0)
-		        valueY += (int) ((maxValue - values[i]) * scale);
-		      else {
-		        valueY += (int) (maxValue * scale);
-		        height = -height;
-		      }
 
+		    for (int i = 0; i < values.length; i++) {
+			      int valueX = i * barWidth + 1;
+			      int valueY = top;
+			      int height = (int) (values[i] * scale);
+			      if (values[i] >= 0)
+			        valueY += (int) ((maxValue - values[i]) * scale);
+			      else {
+			        valueY += (int) (maxValue * scale);
+			        height = -height;
+			      }
+		      
 		      g.setColor(Color.black);
 		      g.fillRect(valueX, valueY, barWidth - 2, height);
 		      g.setColor(Color.blue);
 		      g.drawRect(valueX, valueY, barWidth - 2, height);
-		      int labelWidth = labelFontMetrics.stringWidth(names[i]);
+		      
+		      int labelWidth = labelMetrics.stringWidth(names[i]);
 		      x = i * barWidth + (barWidth - labelWidth) / 2;
 		      g.drawString(names[i], x, y);
 		    }
@@ -130,7 +135,7 @@ public class Game extends JPanel{
 		    values[3] = round.getdraws();// store draws
 		    names[3] = "Draws";
 
-		    f.getContentPane().add(new Game(values, names,round));
+		    f.getContentPane().add(new Game(values, names));
 		    f.setVisible(true);
 		  }
 }
@@ -152,56 +157,56 @@ private int outcome;
 private boolean tie, p1win;
 	
 	/****************************************************************************************
-	 * 
-	 * 
-	 * 
-	 * 
+	 * <pre>
+	 * The method getdraws, returns the total number of draws.
+	 * </pre>
 	 ****************************************************************************************/
 	public int getdraws(){
 		return draws;
 	}
 	/****************************************************************************************
-	 * 
-	 * 
-	 * 
-	 * 
+	 * <pre>
+	 * The method getscissors, returns the total number of wins by scissors.
+	 * </pre>
 	 ****************************************************************************************/
 	public int getscissors(){
 		return scissors;
 	}
 	/****************************************************************************************
-	 * 
-	 * 
-	 * 
-	 * 
+	 * <pre>
+	 * The method getscissors, returns the total number of wins by scissors.
+	 * </pre>
 	 ****************************************************************************************/
 	public int getrock(){
 		return rock;
 	}
 	/****************************************************************************************
-	 * 
-	 * 
-	 * 
-	 * 
+	 * <pre>
+	 * The method getpaper, returns the total number of wins by paper.
+	 * </pre>
 	 ****************************************************************************************/
 	public int getpaper(){
 		return paper;
 	}
 	/****************************************************************************************
-	 * 
-	 * 
-	 * 
-	 * 
+	 * <pre>
+	 * The Rounds constructor, initialized the number of players, number of wins by scissors,
+	 * the number of wins by paper, the number of wins by rock and the number of draws.
+	 * </pre>
 	 ****************************************************************************************/
 	public Rounds () {
 		count = 0;
+		draws = 0;
+		scissors = 0;
+		rock = 0;
+		paper = 0;
 	}
 
 	/****************************************************************************************
-	 * 
-	 * 
-	 * 
-	 * 
+	 * <pre>
+	 * The method close displays the number of wins by scissors, the number of wins by paper,
+	 * the number of wins by rock and the number of draws after 1000 rounds.
+	 * </pre>
 	 ****************************************************************************************/
 	public void close() {
 			System.out.println("Summary Statistics: ");
@@ -212,15 +217,16 @@ private boolean tie, p1win;
 	}
 	// All Players are playing
 	/****************************************************************************************
-	 * 
-	 * 
-	 * 
-	 * 
+	 * <pre>
+	 * The method isAllDone determines if player 1/player 2 is the winner, 
+	 * loser or if the game is a tie.
+	 * </pre>
+	 * @param int passes the value for player 1 representing rock, paper, or scissor.
+	 * @param int passes the value for player 2 representing rock, paper, or scissor.
 	 ****************************************************************************************/
-	public synchronized int isAllDone(int i1, int i2){
+	public synchronized void isAllDone(int i1, int i2){
 		// Rock = 1, Paper = 2, Scissors = 3
 		//Player 1 has Rock
-		
 		 if(i1 == 1){
              if(i2 == 1){
 				 tie = true;
@@ -262,18 +268,15 @@ private boolean tie, p1win;
 				 tie = true;
 			 }
          }
-		 
-		 return 0;
 	}
 	/****************************************************************************************
-	 * 
-	 * 
-	 * 
+	 * <pre>
+	 * The method waitForOthers makes player 1 wait for player 2.
+	 * </pre>
 	 * 
 	 ****************************************************************************************/
 	public synchronized void waitForOthers(){
-		count++;
-		//count == 0 means only 1 player has played
+		count++;// count represents the number of players
 		if(count < 2){
 			try{
 				wait();
@@ -288,8 +291,9 @@ private boolean tie, p1win;
 	}
 	/****************************************************************************************
 	 * <pre>
-	 * The method returns the string for each category.
+	 * The method returns the string for hand symbol.
 	 * </pre>
+	 * @param int handsymbol value.
 	 * @return String rock
 	 * @return String paper
 	 * @return String scissors
@@ -303,10 +307,12 @@ private boolean tie, p1win;
 			return "Scissors";
 	}
 	/****************************************************************************************
-	 * 
-	 * 
-	 * 
-	 * 
+	 * <pre>
+	 * The method play assigns each player their hand symbol and passes the hand symbol
+	 * of each player to isAllDone method.
+	 * </pre>
+	 * @param int passes the id for each player.
+	 * @param int passes the current round.
 	 ****************************************************************************************/
 	public synchronized void play(int identity, int run){
 		id = identity;
@@ -322,10 +328,10 @@ private boolean tie, p1win;
 		isAllDone(player1Symbol,player2Symbol);
 	}
 	/****************************************************************************************
-	 * 
-	 * 
-	 * 
-	 * 
+	 * <pre>
+	 * The result method displays the number of rounds with the players hand symbol. It 
+	 * also displays if the round is a tie or which player was the winner and loser.
+	 * </pre>
 	 ****************************************************************************************/
 	public synchronized void results(){
 		
@@ -356,33 +362,31 @@ private boolean tie, p1win;
 			System.out.println("Player 1 loses!");
 		}
 	}	
-} // Rounds
+} // end of class Rounds
 /*********************************************************************************************************
  *<pre>
  *
- * The Player class, creates a thread for each player.
+ * The class player, creates a thread for each player.
  * 
  * </pre>
  *********************************************************************************************************/
 class Player extends Thread {
 private int id;
 private Rounds round;
-private int games = 1000;
+private int games = 1000;// total number of rounds
 /****************************************************************************************
- * 
- * 
- * 
- * 
+ * <pre>
+ * The player constructor initialized the id for each player and object round.
+ * </pre>
  ****************************************************************************************/
 public Player(int i, Rounds round) {
 		id = i;
 		this.round = round;
 }
 /****************************************************************************************
- * 
- * 
- * 
- * 
+ * <pre>
+ * The method run coordinates the player class with the rounds class. 
+ * </pre>
  ****************************************************************************************/
 public void run() {
 	for(int i = 0; i < games; i++){
@@ -390,4 +394,4 @@ public void run() {
 		round.waitForOthers(); //wait for other player to finish
 	}//end for
 } //run
-} // Player
+} // end of class Player
