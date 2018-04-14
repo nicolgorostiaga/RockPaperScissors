@@ -4,9 +4,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 /*********************************************************************************************************
@@ -35,7 +32,7 @@ public class Game extends JPanel{
 	 * @param String[] names for each category.
 	 * @param String[] title of the graph.
 		 ****************************************************************************************/
-	  public Game(double[] v, String[] n, String t) {
+	  public Game(double[] v, String[] n) {
 	    names = n;
 	    values = v;
 	    title = "Relative Wins and Draws with 2 Players and 1000 Rounds";
@@ -47,9 +44,6 @@ public class Game extends JPanel{
 		 * 
 		 ****************************************************************************************/
 	  public void paintComponent(Graphics g) {
-		    super.paintComponent(g);
-		    if (values == null || values.length == 0)
-		      return;
 		    double minValue = 0;
 		    double maxValue = 0;
 		    for (int i = 0; i < values.length; i++) {
@@ -63,10 +57,11 @@ public class Game extends JPanel{
 		    int clientWidth = d.width;
 		    int clientHeight = d.height;
 		    int barWidth = clientWidth / values.length;
-
-		    Font titleFont = new Font("SansSerif", Font.BOLD, 12);
+		    // Title of Bar graph
+		    Font titleFont = new Font("arial",Font.BOLD, 12);
 		    FontMetrics titleFontMetrics = g.getFontMetrics(titleFont);
-		    Font labelFont = new Font("SansSerif", Font.PLAIN, 10);
+		    // Title for each Category
+		    Font labelFont = new Font("arial", Font.PLAIN, 10);
 		    FontMetrics labelFontMetrics = g.getFontMetrics(labelFont);
 
 		    int titleWidth = titleFontMetrics.stringWidth(title);
@@ -94,9 +89,9 @@ public class Game extends JPanel{
 		        height = -height;
 		      }
 
-		      g.setColor(Color.BLACK);
-		      g.fillRect(valueX, valueY, barWidth - 2, height);
 		      g.setColor(Color.black);
+		      g.fillRect(valueX, valueY, barWidth - 2, height);
+		      g.setColor(Color.blue);
 		      g.drawRect(valueX, valueY, barWidth - 2, height);
 		      int labelWidth = labelFontMetrics.stringWidth(names[i]);
 		      x = i * barWidth + (barWidth - labelWidth) / 2;
@@ -118,31 +113,25 @@ public class Game extends JPanel{
 		player2.join();
 		}
 		catch (InterruptedException e) {}
+		
 		round.close();
-		//Graph
-		 JFrame f = new JFrame();
+		
+		 JFrame f = new JFrame();// sets the frame for the bar graph
 		    f.setSize(400, 300);
 		    double[] values = new double[4];
 		    String[] names = new String[4];
-		    values[0] = 1;
+		    values[0] = 1;// store scissor wins
 		    names[0] = "Scissors";
 
-		    values[1] = 2;
+		    values[1] = 2;// store paper wins
 		    names[1] = "Paper";
 
-		    values[2] = 3;
+		    values[2] = 3;// store rock wins
 		    names[2] = "Rock";
-		    values[3] = 4;
+		    values[3] = 4;// store draws
 		    names[3] = "Draws";
 
-		    f.getContentPane().add(new Game(values, names, "title"));
-
-		    WindowListener wndCloser = new WindowAdapter() {
-		      public void windowClosing(WindowEvent e) {
-		        System.exit(0);
-		      }
-		    };
-		    f.addWindowListener(wndCloser);
+		    f.getContentPane().add(new Game(values, names));
 		    f.setVisible(true);
 		  }
 }
