@@ -51,16 +51,13 @@ private boolean tie, p1win;
 		
 		 if(i1 == 1){
              if(i2 == 1){
-            	 draws++;
 				 tie = true;
 			 }
              else if(i2 == 2){
-				 paper++;
 				 p1win = false;
 				 tie = false; 
 			 }
              else{
-            	 rock++;
 				 tie = false;
 				 p1win = true;
 			 }
@@ -68,16 +65,13 @@ private boolean tie, p1win;
 		 // Player 1 has paper
          else if(i1 == 2){
              if(i2 == 1){
-            	 paper++;
 				 tie = false;
                  p1win = true;
 			 }
              else if(i2 == 2){
-            	 draws++;
 				 tie = true;
 			 }
              else{
-				 scissors++;
 				 p1win = false;
 				 tie = false;
 			 }
@@ -85,17 +79,14 @@ private boolean tie, p1win;
 		 //Player 1 has scissor
          else{
              if(i2 == 1){
-				 rock++;
 				 p1win = false;
 				 tie = false;
 			 }
              else if(i2 == 2){
-            	 scissors++;
 				 tie = false;
 				 p1win = true;
 			 }
              else{
-            	 draws++;
 				 tie = true;
 			 }
          }
@@ -138,8 +129,7 @@ private boolean tie, p1win;
 		else if(id == 2){
 			player2Symbol = outcome;
 		}
-		if(player1Symbol != -1 && player2Symbol != -1)
-			isAllDone(player1Symbol,player2Symbol);
+		isAllDone(player1Symbol,player2Symbol);
 	}
 	
 	//results for round
@@ -147,13 +137,27 @@ private boolean tie, p1win;
 		
 		System.out.println("Round "+ currentRuns +": Player 1" + " "+ symbolToString(player1Symbol));
 		System.out.println("Round "+ currentRuns +": Player 2" + " "+ symbolToString(player2Symbol));
-		if(tie)
+		if(tie){
 			System.out.println("Tie!");
+			draws++;
+		}
 		else if(p1win){
+			if(player1Symbol == 1)
+				rock++;
+			else if(player1Symbol == 2)
+				paper++;
+			else
+				scissors++;
 			System.out.println("Player 1 wins!");
 			System.out.println("Player 2 loses!");
 		}
 		else{
+			if(player2Symbol == 1)
+				rock++;
+			else if(player2Symbol == 2)
+				paper++;
+			else
+				scissors++;
 			System.out.println("Player 2 wins!");
 			System.out.println("Player 1 loses!");
 		}
