@@ -106,6 +106,12 @@ public class Game extends JPanel{
 		Player player1, player2;
 		Rounds round;
 		round = new Rounds();
+		
+		JFrame f = new JFrame();// sets the frame for the bar graph
+		double[] values = new double[4];
+	    String[] names = new String[4];
+	    f.setSize(400, 300);
+	    
 		player1 = new Player (1, round);
 		player2 = new Player (2, round);
 		
@@ -113,17 +119,13 @@ public class Game extends JPanel{
 		player2.start ();
 
 		try {
-		player1.join();
-		player2.join();
+			player1.join();
+			player2.join();
 		}
 		catch (InterruptedException e) {}
 		
-		round.close();
-		
-		 JFrame f = new JFrame();// sets the frame for the bar graph
-		    f.setSize(400, 300);
-		    double[] values = new double[4];
-		    String[] names = new String[4];
+			round.close();
+
 		    values[0] = round.getscissors();// store scissor wins
 		    names[0] = "Scissors";
 
@@ -293,7 +295,7 @@ private boolean tie, p1win;
 	 * <pre>
 	 * The method returns the string for hand symbol.
 	 * </pre>
-	 * @param int handsymbol value.
+	 * @param int hand symbol value.
 	 * @return String rock
 	 * @return String paper
 	 * @return String scissors
