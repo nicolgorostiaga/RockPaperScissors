@@ -23,29 +23,29 @@ public class Game extends JPanel{
 	  private String[] names;
 	  private String title;
 	  /****************************************************************************************
-		 * <pre>
-	 * The Game constructor sets the name of each category, the title, and the values
-	 * of each category. The category include draw, wins by scissors, wins by rock,
-	 * and wins by paper.
-	 * </pre>
-	 * @param double[] values for paper, draws, scissors, rock.
-	 * @param String[] names for each category.
-	 * @param String[] title of the graph.
+	   * <pre>
+	   * The Game constructor sets the name of each category, the title, and the values
+	   * of each category. The category include draw, wins by scissors, wins by rock,
+	   * and wins by paper.
+	   * </pre>
+	   * @param double[] values for paper, draws, scissors, rock.
+	   * @param String[] names for each category.
 		 ****************************************************************************************/
-	  public Game(double[] v, String[] n) {
+	  public Game(double[] v, String[] n, Rounds round) {
 	    names = n;
 	    values = v;
 	    title = "Relative Wins and Draws with 2 Players and 1000 Rounds";
 	  }
 	  /****************************************************************************************
-		 * 
-		 * 
-		 * 
-		 * 
-		 ****************************************************************************************/
+	   * 
+	   * 
+	   * 
+	   * 
+	   ****************************************************************************************/
 	  public void paintComponent(Graphics g) {
 		    double minValue = 0;
 		    double maxValue = 0;
+		    
 		    for (int i = 0; i < values.length; i++) {
 		      if (minValue > values[i])
 		        minValue = values[i];
@@ -63,7 +63,7 @@ public class Game extends JPanel{
 		    // Title for each Category
 		    Font labelFont = new Font("arial", Font.PLAIN, 10);
 		    FontMetrics labelFontMetrics = g.getFontMetrics(labelFont);
-
+		    
 		    int titleWidth = titleFontMetrics.stringWidth(title);
 		    int y = titleFontMetrics.getAscent();
 		    int x = (clientWidth - titleWidth) / 2;
@@ -77,7 +77,6 @@ public class Game extends JPanel{
 		    double scale = (clientHeight - top - bottom) / (maxValue - minValue);
 		    y = clientHeight - labelFontMetrics.getDescent();
 		    g.setFont(labelFont);
-
 		    for (int i = 0; i < values.length; i++) {
 		      int valueX = i * barWidth + 1;
 		      int valueY = top;
@@ -131,7 +130,7 @@ public class Game extends JPanel{
 		    values[3] = round.getdraws();// store draws
 		    names[3] = "Draws";
 
-		    f.getContentPane().add(new Game(values, names));
+		    f.getContentPane().add(new Game(values, names,round));
 		    f.setVisible(true);
 		  }
 }
