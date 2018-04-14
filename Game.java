@@ -7,7 +7,7 @@ public class Game {
 		Rounds round;
 		int draws,scissors,rock,paper;
 		int maxRounds = 5;// This value should be 1000 but for testing purposes is 5.
-		round = new Rounds(maxRounds);
+		round = new Rounds();
 		player1 = new Player (1, round);
 		player2 = new Player (2, round);
 		
@@ -21,12 +21,14 @@ public class Game {
 		}
 		catch (InterruptedException e) {}
 		
+		/*
 		draws = player1.getdraws()+player2.getdraws();
 		scissors = player1.getscissorwins()+ player2.getscissorwins();
 		rock = player1.getrockwins()+player2.getrockwins();
 		paper = player1.getpaperwins()+player2.getpaperwins();
 		
 		round.close(round,maxRounds,draws, scissors, rock, paper);
+		*/
 		}
 } // RunLibrary
 
@@ -36,18 +38,11 @@ private boolean[] doneplaying;
 private int maxRuns;
 private int currentRuns;
 private int player2Symbol,player1Symbol;// stores the handsymbol of the player
-private int numTies; // number of Ties
-private int numWins;// number of wins
-private int numLose;// number of lose
+private int draws, scissors, rock, paper;
 private int count;
 private int id;
-private boolean tie = false,p1win = false,p2win = false;
-	public Rounds (int mr) {
-		maxRuns = mr;
-		currentRuns = 0;
-		numTies = 0;
-		numWins = 0;
-		numLose = 0;
+private boolean tie, p1win;
+	public Rounds () {
 		count = 0;
 	}
 	public int getmaxRounds(){
@@ -56,7 +51,7 @@ private boolean tie = false,p1win = false,p2win = false;
 	public int getcurrentRuns(){
 		return currentRuns;
 	}
-	public void close (Rounds round,int maxRounds,int draws, int scissors, int rock, int paper) {
+	public void close () {
 			System.out.println("Summary Statistics: ");
 			System.out.println("Number of draws: "+ draws);
 			System.out.println("Number of times scissors won: "+ scissors);
@@ -81,16 +76,15 @@ private boolean tie = false,p1win = false,p2win = false;
 		
 		 if(i1 == 1){
              if(i2 == 1){
-            	 numTies++;
+            	 draws++;
 				 tie = true;
 			 }
              else if(i2 == 2){
 				 p1win = false;
-				 tie = false;
-            	 numLose++; 
+				 tie = false; 
 			 }
              else{
-            	 numLose++;
+            	 rock++;
 				 tie = false;
 				 p1win = true;
 			 }
@@ -98,16 +92,15 @@ private boolean tie = false,p1win = false,p2win = false;
 		 // Player 1 has paper
          else if(i1 == 2){
              if(i2 == 1){
-            	 numWins++;
+            	 paper++;
 				 tie = false;
                  p1win = true;
 			 }
              else if(i2 == 2){
-            	 numTies++;
+            	 draws++;
 				 tie = true;
 			 }
              else{
-            	 numLose++;
 				 p1win = false;
 				 tie = false;
 			 }
@@ -115,17 +108,16 @@ private boolean tie = false,p1win = false,p2win = false;
 		 //Player 1 has scissor
          else{
              if(i2 == 1){
-            	 numWins++;
-				 p1win = true;
+				 p1win = false;
 				 tie = false;
 			 }
              else if(i2 == 2){
-            	 numWins++;
+            	 scissors++;
 				 tie = false;
-				 p1win = false;
+				 p1win = true;
 			 }
              else{
-            	 numWins++;
+            	 draws++;
 				 tie = true;
 			 }
          }
@@ -241,6 +233,7 @@ public void run () {
 		rounds.waitForOthers();
 		rounds.results();
 	}
+	rounds.close();
 	//rounds.outcome(numdraws, numscissors, numrock, numpaper);
 }
 	
