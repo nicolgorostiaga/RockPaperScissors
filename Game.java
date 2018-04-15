@@ -66,41 +66,43 @@ public class Game extends JPanel{
 		    Font labelFont = new Font("arial", Font.PLAIN, 10);
 		    FontMetrics labelMetrics = g.getFontMetrics(labelFont);
 		    
-		  
-		    int titleWidth = titleMetrics.stringWidth(title);
-		    int y = titleMetrics.getAscent();
-		    int x = (clientWidth - titleWidth) / 2;
-		    g.setFont(titleFont);
-		    g.drawString(title, x, y);
+		    try{
+		    	int titleWidth = titleMetrics.stringWidth(title);
+		    	int y = titleMetrics.getAscent();
+		    	int x = (clientWidth - titleWidth) / 2;
+		    	g.setFont(titleFont);
+		    	g.drawString(title, x, y);
 		    
-		    int top = titleMetrics.getHeight();
-		    int bottom = labelMetrics.getHeight();
+		    	int top = titleMetrics.getHeight();
+		    	int bottom = labelMetrics.getHeight();
 		    
 		    
-		    double scale = (clientHeight - top - bottom) / (maxValue - minValue);
-		    y = clientHeight - labelMetrics.getDescent();
-		    g.setFont(labelFont);
-
-		    for (int i = 0; i < values.length; i++) {
+		    	double scale = (clientHeight - top - bottom) / (maxValue - minValue);
+		    	y = clientHeight - labelMetrics.getDescent();
+		    	g.setFont(labelFont);
+		    
+		    	for (int i = 0; i < values.length; i++) {
 			      int valueX = i * barWidth + 1;
 			      int valueY = top;
 			      int height = (int) (values[i] * scale);
-			      if (values[i] >= 0)
-			        valueY += (int) ((maxValue - values[i]) * scale);
-			      else {
-			        valueY += (int) (maxValue * scale);
-			        height = -height;
-			      }
-		      
-		      g.setColor(Color.black);
-		      g.fillRect(valueX, valueY, barWidth - 2, height);
-		      g.setColor(Color.blue);
-		      g.drawRect(valueX, valueY, barWidth - 2, height);
-		      
-		      int labelWidth = labelMetrics.stringWidth(names[i]);
-		      x = i * barWidth + (barWidth - labelWidth) / 2;
-		      g.drawString(names[i], x, y);
-		    }
+			      	if (values[i] >= 0)
+			      		valueY += (int) ((maxValue - values[i]) * scale);
+			      	else {
+			      		valueY += (int) (maxValue * scale);
+			      		height = -height;
+			      	}
+		    
+			      	g.setColor(Color.black);
+			      	g.fillRect(valueX, valueY, barWidth - 2, height);
+			      	g.setColor(Color.blue);
+			      	g.drawRect(valueX, valueY, barWidth - 2, height);
+			      	
+			      	int labelWidth = labelMetrics.stringWidth(names[i]);
+			      	x = i * barWidth + (barWidth - labelWidth) / 2;
+			      	g.drawString(names[i], x, y);
+			      	Thread.sleep(200);// slow down the display of the bar 
+			      	}
+		    }catch(InterruptedException e2){}
 		  }
 	public static void main (String args[]) {
 		Player player1, player2;
